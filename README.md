@@ -15,9 +15,15 @@ http://www.lcdwiki.com/images/4/44/MPI3501-001.jpg
 
 The one I used is a Kuman 3.5" Inch 480x320 TFT LCD Touch Screen. This comes with a LCD driver ILI9486 and a resistive touch controller XPT2046. There may be variations on the driver and touch controller, but these two are very common. As far as I know, there are other brands out there like the WaveShare one, that are very similar if not identical.
 
-## The problem and the issue
+## The issue and the problem
 
-### The problem
+### The issue (backlight control)
+
+Well, the issue is that thease cheap touchscreens **do not come with a backlight control** ... So, the screen is on all the time, consuming ~100mA for the backlight.
+
+To implement this, I designed a little circuit to have ON/OFF control on the backlight, which requires 3 resistors and 1 transistor and minimal soldering skills.
+
+### The problem (Framebuffers)
 There is one major disadvantage that prevent these type of screens to work easily on the latest versions of VenusOS. It is related to Framebuffers.
 
 [In the next lines, there may be some inaccuracies]
@@ -49,11 +55,10 @@ So, if no remapping is possible there were to possible solutions:
 1 - Change order of fb inside Linux config to first use fb_ili9486 instead of 0 simple ---> but this is strictly prohibited by the OS.
 2 - Find a way to duplicate the content being streamed to fb 0 (which indirectly is using BCM2708) into 2 fb_ili9486 --> **SOLUTION!! Use program called fbcp.**
 
-### The issue
 
-Well, the issue is that thease cheap touchscreens do not come with a backlight control ... So, the screen is on all the time, consuming ~100mA for the backlight.
+## Backlight control
 
-To implement this, I designed a little circuit to have ON/OFF control on the backlight, which requires 3 resistors and 1 transistor and minimal soldering skills.
+In order to implement hw modification, you will have to find the limiting resistor for the LED backlight string. In my case is R5 - 2.2 ohm. So, you need to desolder it and install the next circuit:
 
 
 
