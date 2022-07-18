@@ -64,6 +64,12 @@ In order to implement hw modification, you will have to find the limiting resist
 
 For R2, choose values between 1k and 1k5 (for sufficient base current) and for R3 values between 10k and 56k (for correct base pull-down)
 
+For R1 (R5 marked in PCB's silkscreen) you have two options:
+-  Keep the SMD resistor and solder one side to the PCB (the pad which is not GND) and solder the other side to R2.
+-  Take a THD resistor of the same value and solder it as I did.
+
+I had laying around 2.2 ohm resistors, so I was easy for me. But, I understand that this low value resistors and harder to find, so I would choose to keep SMD resistor and get R2 and R3 that are more common values.
+
 ![image](https://user-images.githubusercontent.com/35175513/179475164-faaac4ad-1c70-4f27-9ef2-896fc098d743.png)
 
 ![image](https://user-images.githubusercontent.com/35175513/179475322-ea8da534-c25f-416f-a57a-051a14aaf7e6.png)
