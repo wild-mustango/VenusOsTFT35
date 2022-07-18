@@ -19,7 +19,7 @@ The one I used is a Kuman 3.5" Inch 480x320 TFT LCD Touch Screen. This comes wit
 
 ### The issue (backlight control)
 
-Well, the issue is that these cheap touchscreens **do not come with a backlight control** ... So, the screen is on all the time, consuming 75~100mA for the backlight.
+Well, the issue is that these cheap touchscreens **do not come with a backlight control** ... So, the screen is on all the time, consuming 75~100mA for the backlight. Altough the ILI9486 has a specific pin for dimming, it is not implemented in these cheap boards.
 
 To implement this, I designed a little circuit to have ON/OFF control on the backlight, which requires 3 resistors, a transistor and minimal soldering skills.
 
@@ -98,4 +98,28 @@ backlightCtrl /dev/input/touchscreen0 45
 ```
 
 This command will be lauched by default in a rc.local script I will provide. So, everytime the raspberry boots up, this programm will take care of backlight.
+
+## Duplicating the main fb stream
+
+There is an awesome program for Raspberry Pi called **fbcp** from [tasanakorn](https://github.com/tasanakorn/rpi-fbcp). It's main purpose is "used for copy primary framebuffer to secondary framebuffer" without accepting arguments from command prompt. So, I modified it to accept destination framebuffer via argument.
+
+Usage example:
+
+```
+fbcp /dev/fb2
+```
+
+### Small compilation note, for those interested in compiling for VenusOS
+I tried several times to Cross-Compile from a Linux machine using Victron's SDK, but I was not able to fully setup the compiling environment. I reckon, it is because there are libraries/source code that are private and not available to the public. The way I found to circumvent this, was to compile both programs using another RasPi with Raspbian and then copying the required libraries from the raspbian machine. This is why the following libraries are copied to /usr/lib during the installation process:
+
+backlightCtrl -->
+
+libwiringPi.so
+libcrypt.so.1
+
+fbcp -->
+
+libbcm_host.so
+libvchiq_arm.so
+libvcos.so
 
