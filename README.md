@@ -123,3 +123,129 @@ libbcm_host.so
 libvchiq_arm.so
 libvcos.so
 
+# Complete Installation instructions
+
+# 1. Install VenusOS into microSD (complete data wipe of previous data)
+
+## 1.1. Image burning
+***************************
+
+Go to:
+
+https://updates.victronenergy.com/feeds/venus/release/images/raspberrypi2/
+
+and download latest firmware version. Latest OS version will reside in **venus-image-raspberrypi2.wic.gz** In addition, the OS image will also appear with its full name, for instance (checked on 2022-07-14),  venus-image-raspberrypi2-20220531133203-v2.87.rootfs.wic.gz
+
+.wic.gz are compressed files. I recommend, decompressing the file first. Then, burn the .wic image with [BalenaEtcher](https://www.balena.io/etcher/)
+
+1.2 - Configuración superusuario, password, ssh y conexión WiFi
+*************************************************
+
+Para este paso, no es necesario tener conectada al TFT3.5 touchscreen, pero si está puesta, no hay problema.
+
+Colocamos la tarjeta con el nuevo firmware en la RasPi, conectamos el cable de red.
+
+Procedemos a alimentar la raspberry y accedemos con un navegador a http://venus.local
+
+En la pantalla inicial, en la parte derecha - HOTKEYS - pinchamos en Intro->Settings->Display Language y cambiamos a Español-
+
+Se reiniciará la interfaz gráfica y en unos momentos, actualizando la página, ya aparecerá el idioma en castellano.
+
+Pulsamos en Menú->Configuración->General y mantenemos pulsada la flecha a la derecha de Hotkeys hasta que aparezca superusuario.
+Establecemos la contraseña en "Set Root Password" y activamos "SSH en LAN". Con esto ya podremos inicar una sesión SSH.
+
+Ahora vamos a configurar el WiFi para poder desconectar el cable ethernet. Para ello, vamos a Menú->Configuración-> y nos desplazamos hacia abajo
+hasta encontrar Wi-Fi. Aparacerá el listado de redes descubiertas. Pinchamos en la nuestra, metemos la contraseña y se conectará automáticamente.
+Desde enú->Configuración->General pinchamos en reiniciar y desconectamos el cable Ethernet.
+
+2 - Instalación y configuración del software necesario para usar una pantalla táctil barata TFT3.5"
+----------------------------------------------------------------------------------------------------
+
+2.1 - Instalación ficheros necesarios
+*************************************
+
+- copy venus-data.zip to a clean fat32 usb drive root folder.
+- plug it into RasPi and power it on
+- wait until you can connect to venus.local on a web browser
+- go to Settings->VRM online portal -> scroll down to microSD / USB and click on Press to Eject twice
+- unplug USB drive
+- Go back to Settings -> General and Reboot (click twice)
+- wait again until you can connect to venus.local on a web browser
+- Finally, go Settings -> General and Reboot (click twice)
+- Victron Logo and terminal should come up on-screen.
+
+2.2 Configuración
+*****************
+
+Usando PuTTy, conectarse a venus.local usando SSH con user root y la pass establecida en los primeros pasos.
+
+2.2.1 - Instalar el driver para usar la pantalla táctil en QT (GUI Venus) como un ratón y las herramientas para calibrar la parte táctil
+***************************************
+
+
+opkg update
+opkg install qt4-embedded-plugin-mousedriver-tslib
+opkg install tslib-calibrate
+opkg install tslib-tests
+
+
+2.2.2 - Configurar las variables de entorno relacionadas con la calibración de la pantalla táctil y calibrar
+*********************************************************
+
+reboot
+
+Ahora cargamos en memoria las variables de entorno (estarán activas durante la sesión)
+
+TSLIB_FBDEVICE=/dev/fb0
+TSLIB_TSDEVICE=/dev/input/touchscreen0
+TSLIB_CALIBFILE=/etc/pointercal
+TSLIB_CONFFILE=/etc/ts.conf
+TSLIB_PLUGINDIR=/usr/lib/ts
+
+Y Calibramos:
+
+ts_calibrate
+
+OJO, PORQUE PUEDE POR DEFECTO EL TIMER DE APAGADO DE LA PANTALLA ES DE 45S. Puede darse el caso, que si desde el reinicio, pasan más de 45segundos
+se apagarla pantalla y habrá que tocarla para que se encienda. Si nos pilla despues de haber arrancado ts_calibrate, perderemos algun punto de calibración
+, por lo que terminaremos la calibracion y la volveremos a realizar.
+
+
+2.2.2 - Editar el script de arranque de la GUI de Venus
+*********************************************************
+
+Para evitar tener que meter las variables de entorno manualmente en cada reinicio de VenusOS, editamos el script de aranche del GUI de Venus.
+
+Esto hará que se carguen las variables en cada reinicio para la sesión.
+
+nano /opt/victronenergy/gui/start-gui.sh
+
+Añadimos las siguientes líneas justo debajo del bloque de comentarios “when headfull”
+
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_TSDEVICE=/dev/input/touchscreen0
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_CONFFILE=/etc/ts.conf
+export TSLIB_PLUGINDIR=/usr/lib/ts
+export QWS_MOUSE_PROTO=tslib:/dev/input/touchscreen0
+
+Y guardamos el fichero pulsanco ctrl+x,y
+
+2.2.3 Decir a Venus que “ya tiene pantalla”
+********************************************
+
+mv /etc/venus/headless /etc/venus/headless.off
+
+2.2.4 Ampliar las particiones y usar el máximo posible de la SD
+***************************************************************
+
+Ejecutar:
+
+/opt/victronenergy/swupdate-scripts/resize2fs.sh
+
+Y finalmente reiniciamos
+reboot
+
+Con esto ya deberíamos ver la pantalla inicial de Venus
