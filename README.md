@@ -19,9 +19,9 @@ The one I used is a Kuman 3.5" Inch 480x320 TFT LCD Touch Screen. This comes wit
 
 ### The issue (backlight control)
 
-Well, the issue is that thease cheap touchscreens **do not come with a backlight control** ... So, the screen is on all the time, consuming ~100mA for the backlight.
+Well, the issue is that these cheap touchscreens **do not come with a backlight control** ... So, the screen is on all the time, consuming 75~100mA for the backlight.
 
-To implement this, I designed a little circuit to have ON/OFF control on the backlight, which requires 3 resistors and 1 transistor and minimal soldering skills.
+To implement this, I designed a little circuit to have ON/OFF control on the backlight, which requires 3 resistors, a transistor and minimal soldering skills.
 
 ### The problem (Framebuffers)
 There is one major disadvantage that prevent these type of screens to work easily on the latest versions of VenusOS. It is related to Framebuffers.
@@ -58,8 +58,36 @@ So, if no remapping is possible there were to possible solutions:
 
 ## Backlight control
 
-In order to implement hw modification, you will have to find the limiting resistor for the LED backlight string. In my case is R5 - 2.2 ohm. So, you need to desolder it and install the next circuit:
+### Hardware
 
+In order to implement hw modification, you will have to find the limiting resistor for the LED backlight string. In my case is R5 - 2.2 ohm. So, you need to desolder it and install the next circuit, like shown:
 
+For R2, choose values between 1k and 1k5 (for sufficient base current) and for R3 values between 10k and 56k (for correct base pull-down)
 
+![image](https://user-images.githubusercontent.com/35175513/179475164-faaac4ad-1c70-4f27-9ef2-896fc098d743.png)
+
+![image](https://user-images.githubusercontent.com/35175513/179475322-ea8da534-c25f-416f-a57a-051a14aaf7e6.png)
+
+![image](https://user-images.githubusercontent.com/35175513/179475387-592781b8-a9b4-4365-a961-9fae18553d0e.png)
+
+I've chosen RPi GPIO18(PIN12 of header) because it is also capable of PWM and 2N3904 is fine upto 100MHz. So, in case of PWM dimming everything will be fine. But in this solution I have only implemented a ON-OFF solution, for simplicity.
+
+### Software
+
+In terms of sw, I had to write a small C program to manage backlight. The programs controls the GPIO port and automatically shuts the backlight of after any given time value in seconds without touching the display and turns on after touching the screen when backlight is off.
+
+For this, I used WiringPi library and system calls for the touchscreen input device. See backlightCtrl.c for more details.
+
+This little program takes two arguments:
+
+Arg1: input device - Example: /dev/input/touchscreen0
+Arg2: backlight shutdown timer in seconds - Example: 45
+
+Usage example:
+
+```
+backlightCtrl /dev/input/touchscreen0 45
+```
+
+This command will be lauched by default in a rc.local script I will provide. So, everytime the raspberry boots up, this programm will take care of backlight.
 
