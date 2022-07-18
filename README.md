@@ -78,6 +78,8 @@ I had laying around 2.2 ohm resistors, so I was easy for me. But, I understand t
 
 I've chosen RPi GPIO18(PIN12 of header) because it is also capable of PWM and 2N3904 is fine upto 100MHz. So, in case of PWM dimming everything will be fine. But in this solution I have only implemented a ON-OFF solution, for simplicity.
 
+There are similar solutions to this out there but they require you to remove the adhesive of the screen to access the PCB's bottom side, scratch a track and solder a wire on it. This is more difficult and requires you to redo the screen adhesive.
+
 ### Software
 
 In terms of sw, I had to write a small C program to manage backlight. The programs controls the GPIO port and automatically shuts the backlight of after any given time value in seconds without touching the display and turns on after touching the screen when backlight is off.
