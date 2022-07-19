@@ -125,7 +125,7 @@ libvcos.so
 
 # Complete Installation instructions
 
-# 1. Install VenusOS into microSD (complete data wipe of previous data)
+# 1. Install VenusOS into microSD (complete data wipe of previous data) - Tested upto v2.87
 
 ## 1.1. Image burning
 
@@ -165,7 +165,7 @@ For this step, the TFT3.5" touchscreen, is not required to be connected, but if 
 - Finally, go Settings -> General and Reboot (click twice)
 - Victron Logo and terminal should come up on-screen.
 
-I have put all the required files inside venus-data.zip. By putting this zipped file inside the USB, when the Raspi boots up, checks it and decompresses it to /data. In addition, there is a rcS.local in charge of executing a script to put every file in its corresponding folder and inserting configuration into config.txt. As you have seen, you are required to do two reboots. This is intended and required for the correct installation.  The /data is a special folder that survives afirmware upgrade done from the GUI.
+I have put all the required files inside venus-data.zip. By putting this zipped file inside the USB, when the Raspi boots up, checks USB and decompresses it to /data. One of the decompressed files is rcS.local, in charge of executing a script to put every file in its corresponding folder and inserting configuration into config.txt. As you have seen, you are required to do two reboots. This is intended and required for the correct installation.  The /data is a special folder that survives firmware upgrades done from the GUI.
 
 ## 2.2. Config
 *****************
@@ -180,39 +180,37 @@ opkg install tslib-calibrate
 opkg install tslib-tests
 ```
 
-### 2.2.2 - Configurar las variables de entorno relacionadas con la calibración de la pantalla táctil y calibrar
-*********************************************************
-
+### 2.2.2 - Configuring environment variables related to touchscreen. Calibration.
+```
 reboot
+```
 
-Ahora cargamos en memoria las variables de entorno (estarán activas durante la sesión)
+After rebooting, it's time to load environment variablos into memory (they will be active during session only)
 
+```
 TSLIB_FBDEVICE=/dev/fb0
 TSLIB_TSDEVICE=/dev/input/touchscreen0
 TSLIB_CALIBFILE=/etc/pointercal
 TSLIB_CONFFILE=/etc/ts.conf
 TSLIB_PLUGINDIR=/usr/lib/ts
-
-Y Calibramos:
-
+```
+And now, calibrate:
+```
 ts_calibrate
+```
+NOTE:
+By default, start-up rc.local script sets backlight timer to 45s. It may happen that, after reboot, screen has not been touched for 45s. So, you may get a black screen after launching ts_calibrate. Then, your first touch will switch on backlight again but your first calibration point will be wrong. Don't worry, finish this calibration, relaunch ts_calibrate and do your calibration again.
 
-OJO, PORQUE PUEDE POR DEFECTO EL TIMER DE APAGADO DE LA PANTALLA ES DE 45S. Puede darse el caso, que si desde el reinicio, pasan más de 45segundos
-se apagarla pantalla y habrá que tocarla para que se encienda. Si nos pilla despues de haber arrancado ts_calibrate, perderemos algun punto de calibración
-, por lo que terminaremos la calibracion y la volveremos a realizar.
+### 2.2.2. - Editing start-up script of VenusOS
 
+To avoid loading environment variables manually after each VenusOS reboot, we have to edit the start-up script of the Venus GUI.
 
-2.2.2 - Editar el script de arranque de la GUI de Venus
-*********************************************************
-
-Para evitar tener que meter las variables de entorno manualmente en cada reinicio de VenusOS, editamos el script de aranche del GUI de Venus.
-
-Esto hará que se carguen las variables en cada reinicio para la sesión.
-
+Proceed as follows:
+```
 nano /opt/victronenergy/gui/start-gui.sh
-
-Añadimos las siguientes líneas justo debajo del bloque de comentarios “when headfull”
-
+```
+Then add the next lines just below "when headfull" comment block:
+```
 export TSLIB_TSEVENTTYPE=INPUT
 export TSLIB_CONSOLEDEVICE=none
 export TSLIB_FBDEVICE=/dev/fb0
@@ -221,8 +219,10 @@ export TSLIB_CALIBFILE=/etc/pointercal
 export TSLIB_CONFFILE=/etc/ts.conf
 export TSLIB_PLUGINDIR=/usr/lib/ts
 export QWS_MOUSE_PROTO=tslib:/dev/input/touchscreen0
+```
+And exit with saving the file using ctr+x,y
 
-Y guardamos el fichero pulsanco ctrl+x,y
+After doing this, variables will be automatically loaded after each reboot.
 
 2.2.3 Decir a Venus que “ya tiene pantalla”
 ********************************************
