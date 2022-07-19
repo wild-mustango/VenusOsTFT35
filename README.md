@@ -60,7 +60,7 @@ So, if no remapping is possible there were to possible solutions:
 
 ### Hardware
 
-In order to implement hw modification, you will have to find the limiting resistor for the LED backlight string. In my case is R5 - 2.2 ohm. So, you need to desolder it and install the next circuit, like shown:
+In order to implement hw modification, you will have to find the limiting resistor for the LED backlight string on the PCB. In my case is R5 - 2.2 ohm. So, you need to desolder it and install the next circuit, like shown:
 
 For R2, choose values between 1k and 1k5 (for sufficient base current) and for R3 values between 10k and 56k (for correct base pull-down)
 
@@ -82,7 +82,7 @@ There are similar solutions to this out there but they require you to remove the
 
 ### Software
 
-In terms of sw, I had to write a small C program to manage backlight. The programs controls the GPIO port and automatically shuts the backlight of after any given time value in seconds without touching the display and turns on after touching the screen when backlight is off.
+In terms of sw, I had to write a small C program to manage backlight. The programs controls the GPIO port and automatically shuts the backlight off after any given time value in seconds without touching the display and turns on after touching the screen when backlight is off.
 
 For this, I used WiringPi library and system calls for the touchscreen input device. See backlightCtrl.c for more details.
 
@@ -97,7 +97,7 @@ Usage example:
 backlightCtrl /dev/input/touchscreen0 45
 ```
 
-This command will be lauched by default in a rc.local script I will provide. So, everytime the raspberry boots up, this programm will take care of backlight.
+This command will be lauched by default in a rc.local script I will provide. So, everytime the raspberry boots up, this program will take care of the backlight.
 
 ## Duplicating the main fb stream
 
@@ -128,7 +128,6 @@ libvcos.so
 # 1. Install VenusOS into microSD (complete data wipe of previous data)
 
 ## 1.1. Image burning
-***************************
 
 Go to:
 
@@ -138,14 +137,17 @@ and download latest firmware version. Latest OS version will reside in **venus-i
 
 .wic.gz are compressed files. I recommend, decompressing the file first. Then, burn the .wic image with [BalenaEtcher](https://www.balena.io/etcher/)
 
-1.2 - Configuración superusuario, password, ssh y conexión WiFi
-*************************************************
+1.2. - Superuser, password, ssh and WiFi configuration
 
-Para este paso, no es necesario tener conectada al TFT3.5 touchscreen, pero si está puesta, no hay problema.
+For this step, the TFT3.5" touchscreen, is not required to be connected, but if it is, there's no problem at all.
 
-Colocamos la tarjeta con el nuevo firmware en la RasPi, conectamos el cable de red.
+ --> After burning VenousOS FW, put the microSD card into the raspberry pi and connect ethernet cable.
+ --> Power the RaspPi and open http://venus.local in a webbrowser.
+ --> To change At home screen, on the right hand side - HOTKEYS - Click Enter button->Settings->General
+ --> Click and hold right arrow on the HOTKEYS section until superuser comes up.
+ --> Set a new superuser password clicking on "Set Root Password"
 
-Procedemos a alimentar la raspberry y accedemos con un navegador a http://venus.local
+
 
 En la pantalla inicial, en la parte derecha - HOTKEYS - pinchamos en Intro->Settings->Display Language y cambiamos a Español-
 
