@@ -224,19 +224,23 @@ And exit with saving the file using ctr+x,y
 
 After doing this, variables will be automatically loaded after each reboot.
 
-2.2.3 Decir a Venus que “ya tiene pantalla”
-********************************************
-
+### 2.2.3 Let's tell Venus it "already has a screen"
+```
 mv /etc/venus/headless /etc/venus/headless.off
-
-2.2.4 Ampliar las particiones y usar el máximo posible de la SD
-***************************************************************
-
-Ejecutar:
-
-/opt/victronenergy/swupdate-scripts/resize2fs.sh
-
-Y finalmente reiniciamos
 reboot
+```
+FINALLY!! After rebooting you will see Home Page of VenusOS on your cheap TFT3.5" touchscreen.
 
-Con esto ya deberíamos ver la pantalla inicial de Venus
+### 2.2.4 Bonus stage: Expand partitionsAmpliar las particiones y usar el máximo posible de la SD
+
+This will enlarge your partitions to use as much space available as it can.
+
+```
+/opt/victronenergy/swupdate-scripts/resize2fs.sh
+reboot
+```
+
+Remark: I have noticed that big SD cards (mine is 128GB) only uses up to ~50GB :( don't know the reason.
+
+
+
