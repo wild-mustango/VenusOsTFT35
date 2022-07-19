@@ -165,6 +165,8 @@ For this step, the TFT3.5" touchscreen, is not required to be connected, but if 
 - Finally, go Settings -> General and Reboot (click twice)
 - Victron Logo and terminal should come up on-screen.
 
+I have put all the required files inside venus-data.zip. By putting this zipped file inside the USB, when the Raspi boots up, checks it and decompresses it to /data. In addition, there is a rcS.local in charge of executing a script to put every file in its corresponding folder and inserting configuration into config.txt. As you have seen, you are required to do two reboots. This is intended and required for the correct installation.  The /data is a special folder that survives afirmware upgrade done from the GUI.
+
 ## 2.2. Config
 *****************
 Ussing Putty, connect to a venus.local ssh session using root as user and the password setup before.
