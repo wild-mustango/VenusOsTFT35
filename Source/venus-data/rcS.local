@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# rcS.local by wild.mustango
+#
+# This script is executed called early (rcS) during startup.
+
+# This file will only be executed after an SD format and clean image install
+# for firmware updates, rc.local will take the job.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+if [ -d "/data/tft35_scripts/" ];
+then
+	chmod +x /data/tft35_scripts/tft35BlindInstall
+	/data/tft35_scripts/tft35BlindInstall
+	touch /data/tft35screen_configured
+	exit 0
+fi
+exit -1

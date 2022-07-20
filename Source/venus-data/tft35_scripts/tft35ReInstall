@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# tft35ReInstall
+#
+# Copies libraries and adds config for the screen
+#Next: copies and overwrites required files
+cp /data/tft35_scripts/tft35a-overlay.dtb /u-boot/overlays/
+cp /data/tft35_scripts/*.so /usr/lib
+cp /data/tft35_scripts/*.so.1 /usr/lib
+
+#Now add required lines to /u-boot/config.txt
+echo dtparam=spi=on >> /u-boot/config.txt
+echo dtparam=i2c1=on >> /u-boot/config.txt
+echo dtparam=i2c_arm=on >> /u-boot/config.txt
+echo framebuffer_width=480 >> /u-boot/config.txt
+echo framebuffer_height=320   >> /u-boot/config.txt
+echo dtoverlay=tft35a,rotate=270 >> /u-boot/config.txt
+echo display_default_lcd=1 >> /u-boot/config.txt
+	
+touch /data/tft35_reinstalled
+

@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# tft35BlindInstall
+#
+# It copies and sets everything for the cheap TFT 3.5 to work
+# after first reboot.
+#Next: copies and overwrites required files
+cp /data/tft35_scripts/tft35a-overlay.dtb /u-boot/overlays/
+cp /data/tft35_scripts/*.so /usr/lib
+cp /data/tft35_scripts/*.so.1 /usr/lib
+cp /data/tft35_scripts/rc.local /data
+
+#Now set permission bits
+chmod +x /data/tft35_scripts/backlightCtrl
+chmod +x /data/tft35_scripts/fbcp
+chmod +x /data/rc.local
+chmod +x /data/tft35_scripts/tft35Reinstall
+
+#Now add required lines to /u-boot/config.txt
+echo dtparam=spi=on >> /u-boot/config.txt
+echo dtparam=i2c1=on >> /u-boot/config.txt
+echo dtparam=i2c_arm=on >> /u-boot/config.txt
+echo framebuffer_width=480 >> /u-boot/config.txt
+echo framebuffer_height=320   >> /u-boot/config.txt
+echo dtoverlay=tft35a,rotate=270 >> /u-boot/config.txt
+echo display_default_lcd=1 >> /u-boot/config.txt
+	
