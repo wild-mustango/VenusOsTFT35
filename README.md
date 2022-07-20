@@ -3,7 +3,7 @@ Instructions for using cheap TFT35 LCD Touchscreen with VenusOS from Victron Ene
 
 ## Introduction
 
-For those who don't know, VenuOS is a Linux distribution for several devices from Victron Energy. These devices serve as the "brain" of a Photovoltaic system, in charge of talking with all the componets of this PV System, like: inverters, chargers or battery BMS's among others. Such OS is well-known to be open to download and installed not only in Victron devices (Color Control, Cerbo, etc.), but also into Raspberry Pi devices. This degree of freedom and the fact that Victron has GitHub pages with drivers for third-party HW, Wiki with tutorials and a huge community behind the scenes, makes Victron the brand of choice of many PV enthusiasts/tinkerers like me. Huge thanks and thumbs up to Victron! 
+For those who don't know, VenuOS is a Linux distribution for several GX devices from Victron Energy. These GX devices serve as the "brain" of a Photovoltaic system, in charge of talking with all the componets of this PV System, like: inverters, chargers or battery BMS's among others. Such OS is well-known to be open to download and installed not only in Victron devices (Color Control, Cerbo, etc.), but also into Raspberry Pi devices. This degree of freedom and the fact that Victron has GitHub pages with drivers for third-party HW, Wiki with tutorials and a huge community behind the scenes, makes Victron the brand of choice of many PV enthusiasts/tinkerers like me. Huge thanks and thumbs up to Victron! 
 
 As I mentioned before, the Victron's brain of a PV System is made up of the HW (Victron branded or Raspberry PI) and SW - VenusOS. For interacting with the OS UI you have two ways: by web or by touchscreen. Using any ethernet capable device such as Mobile Phone, PC or a Tablet, you can get into VenusOS UI by accessing http://venus.local on your local network. This requires you to connect your device to your LAN. On the other hand, you can interact with the UI without the requirement of a LAN by using a Touchscreen. Victron has its own High Quality-High Priced Touchscreen but ... we want to have this option at the very lowest price ... And this, folks, is where this repo is for. Using a Raspberry Pi with a cheap TFT 3.5" touchscreen display.
 
@@ -21,8 +21,8 @@ This project has been helped a lot by preceeding people who dealt with this topi
 ## The Cheap LCD Touchscreen for the Raspberry Pi
 
 The Cheap Touchscreen LCDs look like:
-[embed image here]
-http://www.lcdwiki.com/images/4/44/MPI3501-001.jpg
+
+![MPI3501-001](https://user-images.githubusercontent.com/35175513/180016009-c5a1cff5-f980-45d6-985b-d9bfeef2145a.jpg)
 
 The one I used is a Kuman 3.5" Inch 480x320 TFT LCD Touch Screen. This comes with a LCD driver ILI9486 and a resistive touch controller XPT2046. There may be variations on the driver and touch controller, but these two are very common. As far as I know, there are other brands out there like the WaveShare one, that are very similar if not identical.
 
@@ -79,7 +79,7 @@ For R1 (R5 marked in PCB's silkscreen) you have two options:
 -  Keep the SMD resistor and solder one side to the PCB (the pad which is not GND) and solder the other side to R2.
 -  Take a THD resistor of the same value and solder it as I did.
 
-I had laying around 2.2 ohm resistors, so I was easy for me. But, I understand that this low value resistors and harder to find, so I would choose to keep SMD resistor and get R2 and R3 that are more common values.
+I had laying around 2.2 ohm resistors, so it was easy for me. But, I understand that this low value resistors and harder to find, so I would choose to keep SMD resistor and get R2 and R3 that are more common values.
 
 ![image](https://user-images.githubusercontent.com/35175513/179475164-faaac4ad-1c70-4f27-9ef2-896fc098d743.png)
 
