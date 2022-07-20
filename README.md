@@ -26,6 +26,21 @@ The Cheap Touchscreen LCDs look like:
 
 The one I used is a Kuman 3.5" Inch 480x320 TFT LCD Touch Screen. This comes with a LCD driver ILI9486 and a resistive touch controller XPT2046. There may be variations on the driver and touch controller, but these two are very common. As far as I know, there are other brands out there like the WaveShare one, that are very similar if not identical.
 
+## Hardware requisites
+
+- Tested on a Raspberry Pi 3b+
+- Cheap 3.5" TFT LCD Touchscreen (with ILI9486 LCD driver and XPT2046 touchscreen controller)
+- microSD card (>= 16GB)
+- ethernet cable
+- switch/router
+
+Touchscreen mod:
+
+- Soldering iron
+- Tin
+- Flux (optional)
+- Wire cutters
+
 ## The issue and the problem
 
 ### The issue (backlight control)
