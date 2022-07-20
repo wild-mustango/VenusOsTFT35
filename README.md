@@ -110,7 +110,7 @@ There are similar solutions to this out there but they require you to remove the
 
 In terms of sw, I had to write a small C program to manage backlight. The programs controls the GPIO port and automatically shuts the backlight off after any given time value in seconds without touching the display and turns on after touching the screen when backlight is off.
 
-For this, I used WiringPi library and system calls for the touchscreen input device. See backlightCtrl.c for more details.
+For this, I used WiringPi library and system calls for the touchscreen input device. See ![backlightCtrl.c](./source/backlightCtrl.c) for more details.
 
 This little program takes two arguments:
 
@@ -127,7 +127,7 @@ This command will be lauched by default in a rc.local script I will provide. So,
 
 ## Duplicating the main fb stream
 
-There is an awesome program for Raspberry Pi called **fbcp** from [tasanakorn](https://github.com/tasanakorn/rpi-fbcp). It's main purpose is "used for copy primary framebuffer to secondary framebuffer" without accepting arguments from command prompt. So, I modified it to accept destination framebuffer via argument.
+There is an awesome program for Raspberry Pi called **fbcp** from [tasanakorn](https://github.com/tasanakorn/rpi-fbcp). It's main purpose is "used for copy primary framebuffer to secondary framebuffer" without accepting arguments from command prompt. So, I modified it to accept destination framebuffer via argument. You can find it here ![main.c](./source/modified_fbcp/main.c)
 
 Usage example:
 
