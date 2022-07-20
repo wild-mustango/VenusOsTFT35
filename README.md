@@ -165,6 +165,8 @@ For this step, the TFT3.5" touchscreen, is not required to be connected, but if 
 - Finally, go Settings -> General and Reboot (click twice)
 - Victron Logo and terminal should come up on-screen.
 
+![on_screen_before_headless off](https://user-images.githubusercontent.com/35175513/179949489-8d742b9e-9b14-4e35-a4ef-fddb1dca7170.jpg)
+
 I have put all the required files inside venus-data.zip. By putting this zipped file inside the USB, when the Raspi boots up, checks USB and decompresses it to /data. One of the decompressed files is rcS.local, in charge of executing a script to put every file in its corresponding folder and inserting configuration into config.txt. As you have seen, you are required to do two reboots. This is intended and required for the correct installation.  The /data is a special folder that survives firmware upgrades done from the GUI.
 
 ## 2.2. Config
@@ -172,6 +174,7 @@ I have put all the required files inside venus-data.zip. By putting this zipped 
 Ussing Putty, connect to a venus.local ssh session using root as user and the password setup before.
 
 ## 2.2.1 - Installing QT (Venus GUI) mouse driver for the touchscreen and calibration tools for touch
+
 
 ```
 opkg update
@@ -198,6 +201,9 @@ And now, calibrate:
 ```
 ts_calibrate
 ```
+
+![calibration_screen](https://user-images.githubusercontent.com/35175513/179942044-f3cf475e-69fc-4c8f-8138-f272653c9255.jpeg)
+
 NOTE:
 By default, start-up rc.local script sets backlight timer to 45s. It may happen that, after reboot, screen has not been touched for 45s. So, you may get a black screen after launching ts_calibrate. Then, your first touch will switch on backlight again but your first calibration point will be wrong. Don't worry, finish this calibration, relaunch ts_calibrate and do your calibration again.
 
@@ -231,7 +237,10 @@ reboot
 ```
 FINALLY!! After rebooting you will see Home Page of VenusOS on your cheap TFT3.5" touchscreen.
 
-### 2.2.4 Bonus stage: Expand partitionsAmpliar las particiones y usar el máximo posible de la SD
+![venus_os_home_screen](https://user-images.githubusercontent.com/35175513/179940492-51bfa428-b60e-4c6f-af8a-8a708b9890fc.jpeg)
+
+
+### 2.2.4 Bonus stage: Expanding partitions
 
 This will enlarge your partitions to use as much space available as it can.
 
