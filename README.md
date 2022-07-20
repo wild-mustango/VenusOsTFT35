@@ -7,6 +7,17 @@ For those who don't know, VenuOS is a Linux distribution for several devices fro
 
 As I mentioned before, the Victron's brain of a PV System is made up of the HW (Victron branded or Raspberry PI) and SW - VenusOS. For interacting with the OS UI you have two ways: by web or by touchscreen. Using any ethernet capable device such as Mobile Phone, PC or a Tablet, you can get into VenusOS UI by accessing http://venus.local on your local network. This requires you to connect your device to your LAN. On the other hand, you can interact with the UI without the requirement of a LAN by using a Touchscreen. Victron has its own High Quality-High Priced Touchscreen but ... we want to have this option at the very lowest price ... And this, folks, is where this repo is for. Using a Raspberry Pi with a cheap TFT 3.5" touchscreen display.
 
+## Inspiration
+
+This project has been helped a lot by preceeding people who dealt with this topic before me. I read a lot from forums, webposts and GitHub pages. I want to thank them all.
+
+- https://www.buentutorial.com/touchscreen-3-5-venus-en-raspberry/
+- https://github.com/kwindrem
+- https://community.victronenergy.com/questions/40195/venus-on-pi-with-35-gpio-screen.html
+- https://github.com/victronenergy/venus/wiki/pi-Venus-install-Touch-Screen-%28MPI3501--ILI9486-320x480-LCD%29
+- https://gist.github.com/ghettodev/0459eaf9b1ad0754e5dd41ce87cf12fa 
+- https://github.com/tasanakorn/rpi-fbcp
+
 ## The Cheap LCD Touchscreen for the Raspberry Pi
 
 The Cheap Touchscreen LCDs look like:
@@ -88,8 +99,8 @@ For this, I used WiringPi library and system calls for the touchscreen input dev
 
 This little program takes two arguments:
 
-Arg1: input device - Example: /dev/input/touchscreen0
-Arg2: backlight shutdown timer in seconds - Example: 45
+- Arg1: input device - Example: /dev/input/touchscreen0
+- Arg2: backlight shutdown timer in seconds - Example: 45
 
 Usage example:
 
@@ -110,19 +121,20 @@ fbcp /dev/fb2
 ```
 
 ### Small compilation note, for those interested in compiling for VenusOS
+
 I tried several times to Cross-Compile from a Linux machine using Victron's SDK, but I was not able to fully setup the compiling environment. I reckon, it is because there are libraries/source code that are private and not available to the public. The way I found to circumvent this, was to compile both programs using another RasPi with Raspbian and then copying the required libraries from the raspbian machine. This is why the following libraries are copied to /usr/lib during the installation process:
 
 backlightCtrl -->
-
+```
 libwiringPi.so
 libcrypt.so.1
-
+```
 fbcp -->
-
+```
 libbcm_host.so
 libvchiq_arm.so
 libvcos.so
-
+```
 # Complete Installation instructions
 
 # 1. Install VenusOS into microSD (complete data wipe of previous data) - Tested upto v2.87
