@@ -110,7 +110,7 @@ There are similar solutions to this out there but they require you to remove the
 
 In terms of sw, I had to write a small C program to manage backlight. The programs controls the GPIO port and automatically shuts the backlight off after any given time value in seconds without touching the display and turns on after touching the screen when backlight is off.
 
-For this, I used WiringPi library and system calls for the touchscreen input device. See ![backlightCtrl.c](./source/backlightCtrl.c) for more details.
+For this, I used WiringPi library and system calls for the touchscreen input device. See ![backlightCtrl.c](https://github.com/wild-mustango/VenusOsTFT35/tree/main/Source/backlightCtrl.c) for more details.
 
 This little program takes two arguments:
 
@@ -127,7 +127,7 @@ This command will be lauched by default in a rc.local script I will provide. So,
 
 ## Duplicating the main fb stream
 
-There is an awesome program for Raspberry Pi called **fbcp** from [tasanakorn](https://github.com/tasanakorn/rpi-fbcp). It's main purpose is "used for copy primary framebuffer to secondary framebuffer" without accepting arguments from command prompt. So, I modified it to accept destination framebuffer via argument. You can find it here ![main.c](./source/modified_fbcp/main.c)
+There is an awesome program for Raspberry Pi called **fbcp** from [tasanakorn](https://github.com/tasanakorn/rpi-fbcp). It's main purpose is "used for copy primary framebuffer to secondary framebuffer" without accepting arguments from command prompt. So, I modified it to accept destination framebuffer via argument. You can find it here ![main.c](https://github.com/wild-mustango/VenusOsTFT35/tree/main/Source/modified_fbcp/main.c)
 
 Usage example:
 
@@ -182,7 +182,7 @@ For this step, the TFT3.5" touchscreen, is not required to be connected, but if 
 ## 2.1. Installing required files
 
 - Ensure your RasPi is powered off.
-- Copy venus-data.zip to a clean fat32 usb drive root folder.
+- Copy [venus-data.zip](https://github.com/wild-mustango/VenusOsTFT35/blob/main/Installation/venus-data.zip) to a clean fat32 usb drive root folder.
 - Plug it into RasPi and power it on.
 - Wait until you can connect to venus.local on a web browser.
 - go to Settings->VRM online portal -> scroll down to microSD / USB and click on Press to Eject twice.
