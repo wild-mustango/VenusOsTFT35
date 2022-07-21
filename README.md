@@ -99,6 +99,11 @@ I had laying around 2.2 ohm resistors, so it was easy for me. But, I understand 
 
 - Q1: 2N3904 or similar NPN with at least 200mA current rating.
 
+**Little remarks**
+
+- Bear in mind that for GND I used pin 8 of U4. It seems picture is not sharp enough on that area.
+- For pin 12 of header, you will have to remove the plastic. I used the same soldering iron tip until I got to the pin, applied a bit of flux and then soldered the wire onto it.
+
 ![image](https://user-images.githubusercontent.com/35175513/179475164-faaac4ad-1c70-4f27-9ef2-896fc098d743.png)
 
 ![image](https://user-images.githubusercontent.com/35175513/179475322-ea8da534-c25f-416f-a57a-051a14aaf7e6.png)
