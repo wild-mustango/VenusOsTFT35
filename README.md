@@ -87,8 +87,8 @@ So, if no remapping is possible there were to possible solutions:
 ### Hardware
 
 In order to implement hw modification, you will have to find the limiting resistor for the LED backlight string on the PCB. In my case is R5 - 2.2 ohm. So, you need to desolder it and install the next circuit, like shown:
-**Bill of Materials**
 
+**Bill of Materials**
 
 - R2: choose values between 1k and 1k5 (for sufficient base current) -  1/16 W 
 - R3: values between 10k and 56k (for correct base pull-down) -  1/16 W 
